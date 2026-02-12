@@ -45,7 +45,7 @@ public class PricingCalculator {
         };
 
         // City adjustment (e.g. Metro is 10% more)
-        if ("METRO".equalsIgnoreCase(city) || "Pune".equalsIgnoreCase(city)) {
+        if ("METRO".equalsIgnoreCase(city) || "Nashik".equalsIgnoreCase(city)) {
             base += 200;
         }
 
