@@ -21,29 +21,32 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
+        private final JwtUtil jwtUtil;
+        private final UserRepository userRepository;
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String email = oAuth2User.getAttribute("email");
+        @org.springframework.beans.factory.annotation.Value("${frontend.url}")
+        private String frontendUrl;
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ServletException("User not found after OAuth2 login"));
+        @Override
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                        Authentication authentication) throws IOException, ServletException {
+                OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+                String email = oAuth2User.getAttribute("email");
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getId());
-        claims.put("role", user.getRole().name());
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new ServletException("User not found after OAuth2 login"));
 
-        String token = jwtUtil.generateToken(claims, user);
+                Map<String, Object> claims = new HashMap<>();
+                claims.put("userId", user.getId());
+                claims.put("role", user.getRole().name());
 
-        String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:5173/oauth2/redirect")
-                .queryParam("token", token)
-                .queryParam("role", user.getRole().name())
-                .build().toUriString();
+                String token = jwtUtil.generateToken(claims, user);
 
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-    }
+                String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:5173/oauth2/redirect")
+                                .queryParam("token", token)
+                                .queryParam("role", user.getRole().name())
+                                .build().toUriString();
+
+                getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        }
 }
