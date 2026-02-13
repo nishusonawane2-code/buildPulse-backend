@@ -24,9 +24,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         private final JwtUtil jwtUtil;
         private final UserRepository userRepository;
 
-        @org.springframework.beans.factory.annotation.Value("${frontend.url}")
-        private String frontendUrl;
-
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                         Authentication authentication) throws IOException, ServletException {
