@@ -39,7 +39,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
                 String token = jwtUtil.generateToken(claims, user);
 
-                String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:5173/oauth2/redirect")
+                String targetUrl = UriComponentsBuilder.fromUriString("https://buildplus.vercel.app/oauth2/redirect")
                                 .queryParam("token", token)
                                 .queryParam("role", user.getRole().name())
                                 .build().toUriString();
