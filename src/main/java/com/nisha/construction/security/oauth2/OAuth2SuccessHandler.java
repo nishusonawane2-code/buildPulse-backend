@@ -31,7 +31,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 String email = oAuth2User.getAttribute("email");
 
                 User user = userRepository.findByEmail(email)
-                                .orElseThrow(() -> new ServletException("User not found after OAuth2 login"));
+                                .orElseThrow(() -> new ServletException("User not found after OAuth2 login with gauth"));
 
                 Map<String, Object> claims = new HashMap<>();
                 claims.put("userId", user.getId());
