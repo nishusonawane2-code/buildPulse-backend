@@ -75,7 +75,8 @@ public class SecurityConfig {
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-        configuration.setAllowedOrigins(java.util.List.of(frontendUrl, "http://localhost:5173"));
+        configuration.setAllowedOrigins(
+                java.util.List.of(frontendUrl, "http://localhost:5173", "https://buildplus.vercel.app"));
         configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type", "Origin", "Accept",
                 "X-Requested-With", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
